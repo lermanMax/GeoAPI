@@ -227,6 +227,37 @@ def page_of_cities() :
         return make_response(jsonify({'error': 'this page is empty' }), 404)
             
     return jsonify(necessary_list) 
+ 
+@app.route('/suggestCityName', methods=["GET"])  
+def suggest_city_name() :
+#    path_for_geobase = request.json.get('path_for_geobase', path_to_RUbase) # the ability to select a database
+    path_for_geobase = path_to_RUbase
+    
+    if not request.json or not 'part_name' in request.json : abort(400)
+    
+    if type(request.json['part_name']) is not str: 
+        return make_response(jsonify({'error': 'name is not string'}), 400)
+    
+    print(request.json['part_name'])
+    
+    necessary_list = []
+    
+    with open( path_for_geobase, 'r') as geobase:
+        for line in geobase:
+            fields = line.strip().split('\t')
+    
+            if fields[6] == class_P:
+                alternatenames = fields[3].split(',')
+                for name in alternatenames:
+                    if name.find(request.json['part_name']) != -1 and name not in necessary_list:
+                        print(name)
+                        necessary_list.append(name)
+            
+            
+    if not necessary_list : #list is false if empty  
+        return make_response(jsonify({'error': 'This part of name not found in this database'}), 404)
+    
+    return jsonify({'suggest_city_name': necessary_list}) 
     
     
 
