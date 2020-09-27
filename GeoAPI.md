@@ -7,10 +7,10 @@
 Реализовать HTTP-сервер для предоставления информации по географическим объектам.
 Данные взять из географической базы данных GeoNames.
 
-## Методы
-
-Все методы возвращают информацию о городах. Ниже представлено описание параметров городов
-
+## Доступные объекты
+### City
+Этот объект представляет собой информацию о городе. 
+Он представлен объектом JSON.
 
 | Параметр | Тип данных | Описание | 
 |----------------|----------------|----------------|
@@ -34,8 +34,10 @@
 | timezone          | String | the iana timezone id |     
 | modification date | String | date of last modification in yyyy-MM-dd format |
 
+
+## Методы
 _____
-### findCityByID
+### :black_medium_square: findCityByID
 Метод возвращает информацию о городе по идентификатору.
 
 #### HTTP Request
@@ -50,22 +52,22 @@ Content-Type: application/json
 BODY
 ```
 {
-  "geonameid":111111
+  "geonameid": 111111
 }
 ```
 
-| Параметр | Описание | 
-|----------------|----------------|
-| geonameid | id города который нужно получить |
+| Параметр | Тип данных | Описание | 
+|----------------|----------------|----------------|
+| geonameid | Integer | id города который нужно получить |
 
 #### Response
 Метод возвращает JSON следующей структуры
 ```
 {
     "geonameid": "1",
-    "name": "Name 1",
+    "name": "Name",
     "asciiname": "Name",
-    "alternatenames": "Name 2, Name 3", 
+    "alternatenames": "Name2, Name3", 
     "latitude": "11.11111", 
     "longitude": "11.11111", 
     "feature class": "P", 
@@ -83,3 +85,61 @@ BODY
     "modification date": "2020-01-01"
 }
 ```
+_____
+### pageOfCities
+Метод возвращает массив городов на заданной странице с учетом количества городов на страницу    
+
+#### HTTP Request
+```
+GET http://127.0.0.1:8000/pageOfCities
+```
+
+HEADERS
+```
+Content-Type: application/json
+```
+BODY
+```
+{
+  "page": 1,
+  "count": 1
+}
+```
+
+| Параметр | Тип данных | Описание | 
+|----------------|----------------|----------------|
+| page | Integer | номер страницы, которую неоходимо вернуть |
+| count | Integer | количество городов на одну страницу |
+
+#### Response
+Метод возвращает JSON следующей структуры
+```
+{
+  "page_of_cities": [ 
+    {    
+      "geonameid": "1",
+      "name": "Name",
+      "asciiname": "Name",
+      "alternatenames": "Name2, Name3", 
+      "latitude": "11.11111", 
+      "longitude": "11.11111", 
+      "feature class": "P", 
+      "feature code": "PPLC", 
+      "country code": "RU",
+      "cc2": "", 
+      "admin1 code": "1", 
+      "admin2 code": "", 
+      "admin3 code": "", 
+      "admin4 code": "",    
+      "population": "1", 
+      "elevation": "1",
+      "dem": "1", 
+      "timezone": "Continent/City",     
+      "modification date": "2020-01-01"
+    }, 
+    ...
+  ]
+}
+```
+
+
