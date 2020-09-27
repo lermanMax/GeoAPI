@@ -114,32 +114,30 @@ BODY
 #### Response
 Метод возвращает JSON следующей структуры
 ```
-{
-  "page_of_cities": [ 
-    {    
-      "geonameid": "1",
-      "name": "Name",
-      "asciiname": "Name",
-      "alternatenames": "Name2, Name3", 
-      "latitude": "11.11111", 
-      "longitude": "11.11111", 
-      "feature class": "P", 
-      "feature code": "PPLC", 
-      "country code": "RU",
-      "cc2": "", 
-      "admin1 code": "1", 
-      "admin2 code": "", 
-      "admin3 code": "", 
-      "admin4 code": "",    
-      "population": "1", 
-      "elevation": "1",
-      "dem": "1", 
-      "timezone": "Continent/City",     
-      "modification date": "2020-01-01"
-    }, 
-    ...
-  ]
-}
+[ 
+  {    
+    "geonameid": "1",
+    "name": "Name",
+    "asciiname": "Name",
+    "alternatenames": "Name2, Name3", 
+    "latitude": "11.11111", 
+    "longitude": "11.11111", 
+    "feature class": "P", 
+    "feature code": "PPLC", 
+    "country code": "RU",
+    "cc2": "", 
+    "admin1 code": "1", 
+    "admin2 code": "", 
+    "admin3 code": "", 
+    "admin4 code": "",    
+    "population": "1", 
+    "elevation": "1",
+    "dem": "1", 
+    "timezone": "Continent/City",     
+    "modification date": "2020-01-01"
+  }, 
+  ...
+]
 ```
 
 
