@@ -4,7 +4,7 @@
 Автор: Лерман Максим
 
 ## Введение
-Реализовать HTTP-сервер для предоставления информации по географическим объектам.
+Задача: Реализовать HTTP-сервер для предоставления информации по географическим объектам.
 Данные взять из географической базы данных GeoNames.
 
 ## Доступные объекты
@@ -64,12 +64,12 @@ BODY
 Метод возвращает JSON следующей структуры
 ```
 {
-    "geonameid": "1",
+    "geonameid": 1,
     "name": "Name",
     "asciiname": "Name",
     "alternatenames": "Name2, Name3", 
-    "latitude": "11.11111", 
-    "longitude": "11.11111", 
+    "latitude": 11.11111, 
+    "longitude": 11.11111, 
     "feature class": "P", 
     "feature code": "PPLC", 
     "country code": "RU",
@@ -78,15 +78,15 @@ BODY
     "admin2 code": "", 
     "admin3 code": "", 
     "admin4 code": "",    
-    "population": "1", 
-    "elevation": "1",
+    "population": 1, 
+    "elevation": 1,
     "dem": "1", 
     "timezone": "Continent/City",     
     "modification date": "2020-01-01"
 }
 ```
 _____
-### pageOfCities
+### :black_medium_square: pageOfCities
 Метод возвращает массив городов на заданной странице с учетом количества городов на страницу    
 
 #### HTTP Request
@@ -116,12 +116,12 @@ BODY
 ```
 [ 
   {    
-    "geonameid": "1",
+    "geonameid": 1,
     "name": "Name",
     "asciiname": "Name",
     "alternatenames": "Name2, Name3", 
-    "latitude": "11.11111", 
-    "longitude": "11.11111", 
+    "latitude": 11.11111, 
+    "longitude": 11.11111, 
     "feature class": "P", 
     "feature code": "PPLC", 
     "country code": "RU",
@@ -130,8 +130,8 @@ BODY
     "admin2 code": "", 
     "admin3 code": "", 
     "admin4 code": "",    
-    "population": "1", 
-    "elevation": "1",
+    "population": 1, 
+    "elevation": 1,
     "dem": "1", 
     "timezone": "Continent/City",     
     "modification date": "2020-01-01"
@@ -139,5 +139,91 @@ BODY
   ...
 ]
 ```
+_____
+### :black_medium_square: compareTwoCities
+Метод возвращает информацию о двух городах и сравнительную информацию: 
++ какой город расположен севернее
++ находятся ли города в одной временной зоне
++ на сколько часов различаются временные зоны 
+#### HTTP Request
+```
+GET http://127.0.0.1:8000/compareTwoCities
+```
 
+HEADERS
+```
+Content-Type: application/json
+```
+BODY
+```
+{
+  "name_1": "Name1",
+  "name_2": "Name2"
+}
+```
+
+| Параметр | Тип данных | Описание | 
+|----------------|----------------|----------------|
+| name_1 | String | Название первого города в сравнении |
+| name_2 | String | Название второго города в сравнении |
+
+#### Response
+Метод возвращает JSON следующей структуры
+```
+{
+  "city_1": {
+    "geonameid": 1,
+    "name": "Name",
+    "asciiname": "Name",
+    "alternatenames": "Name2, Name3", 
+    "latitude": 11.11111, 
+    "longitude": 11.11111, 
+    "feature class": "P", 
+    "feature code": "PPLC", 
+    "country code": "RU",
+    "cc2": "", 
+    "admin1 code": "1", 
+    "admin2 code": "", 
+    "admin3 code": "", 
+    "admin4 code": "",    
+    "population": 1, 
+    "elevation": 1,
+    "dem": "1", 
+    "timezone": "Continent/City",     
+    "modification date": "2020-01-01"
+  }, 
+  "city_2": {
+    "geonameid": 1,
+    "name": "Name",
+    "asciiname": "Name",
+    "alternatenames": "Name2, Name3", 
+    "latitude": 11.11111, 
+    "longitude": 11.11111, 
+    "feature class": "P", 
+    "feature code": "PPLC", 
+    "country code": "RU",
+    "cc2": "", 
+    "admin1 code": "1", 
+    "admin2 code": "", 
+    "admin3 code": "", 
+    "admin4 code": "",    
+    "population": 1, 
+    "elevation": 1,
+    "dem": "1", 
+    "timezone": "Continent/City",     
+    "modification date": "2020-01-01"
+  }, 
+  "difference_time": 1.0, 
+  "same_timezone": false, 
+  "which_north": "Name2"
+}
+
+```
+| Параметр | Тип данных | Описание | 
+|----------------|----------------|----------------|
+| city_1 | City | Информация о первом городе |
+| city_2 | City | Информация о втором городе |
+| which_north | String | Название города, который расположен севернее |
+| same_timezone | Boolean | Находятся ли города в одной временной зоне. true - в одной временной зоне, false - в разных временных зонах |
+| difference_time | Float | На сколько часов время во втором городе отличается от времени в первом. Сколько часов необходимо прибавить к времени в первом городе, чтобы получить время во втором |
 
