@@ -196,7 +196,7 @@ def compare_two_cities():
 
 
 @app.route('/pageOfCities', methods=["GET"])  
-def page_of_cities(path_for_geobase = path_to_RUbase) :
+def page_of_cities() :
 #    path_for_geobase = request.json.get('path_for_geobase', path_to_RUbase) # the ability to select a database
     path_for_geobase = path_to_RUbase    
     
